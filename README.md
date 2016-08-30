@@ -1,38 +1,39 @@
 # Auth0Salesforce
 
-This sample exposes how to integrate Salesforce authentication with Auth0.
+This sample exposes how to integrate Salesforce Authentication with Auth0.
 
 For this you need to add the following to your `Podfile`:
 ```
-  pod 'Lock', '~> 1.24'
-  pod 'SimpleKeychain'
+pod 'Lock', '~> 1.24'
+pod 'SimpleKeychain'
 ```
-Please make sure they you configure [Salesforce connection](https://auth0.com/docs/connections/social/salesforce)
+Please make sure you configure a [Salesforce connection in Auth0](https://auth0.com/docs/connections/social/salesforce)
 
 ## Important Snippets
 
-### Step 1: Register authenticator 
+### Step 1: Register the authenticator 
 ```swift
-  let lock = A0Lock.sharedLock()
-  let salesforce = A0WebViewAuthenticator(connectionName: "salesforce", lock: lock)
-  lock.registerAuthenticators([salesforce])
+let lock = A0Lock.sharedLock()
+let salesforce = A0WebViewAuthenticator(connectionName: "salesforce", lock: lock)
+lock.registerAuthenticators([salesforce])
 ```
 
-### Step 2: Authenticate with Connection name 
+### Step 2: Authenticate with a Connection name 
 ```swift
-  let success = { (profile: A0UserProfile, token: A0Token) in
-    print("User: \(profile)")
-  }
-  let failure = { (error: NSError) in
-    print("Oops something went wrong: \(error)")
-  }
-  let lock = A0Lock.sharedLock()
-  lock.identityProviderAuthenticator().authenticateWithConnectionName("salesforce", parameters: nil, success: success, failure: failure)
+let success = { (profile: A0UserProfile, token: A0Token) in
+print("User: \(profile)")
+}
+let failure = { (error: NSError) in
+print("Oops something went wrong: \(error)")
+}
+let lock = A0Lock.sharedLock()
+lock.identityProviderAuthenticator().authenticateWithConnectionName("salesforce", parameters: nil, success: success, failure: failure)
 ```
 
-Before using the example please make sure that you change some keys in `Info.plist` with your data:
+Before using the example, please make sure that you change some keys in the `Info.plist` file with your data:
 
-##### Auth0 data from [Auth0 Dashboard](https://manage.auth0.com/#/applications)
+##### Auth0 data from [Auth0 Dashboard](https://manage.auth0.com/#/applications):
+
 - Auth0ClientId
 - Auth0Domain
 - CFBundleURLSchemes
@@ -48,7 +49,7 @@ Before using the example please make sure that you change some keys in `Info.pli
 </array>
 ```
 
-##### For iOS 9 support you need to configuring App Transport Security Exceptions for Salesforce domains
+##### For iOS 9 support you need to configure the App Transport Security Exceptions for Salesforce domains
 ```
 <key>NSAppTransportSecurity</key>
 <dict>
