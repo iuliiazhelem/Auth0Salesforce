@@ -9,6 +9,30 @@ pod 'SimpleKeychain'
 ```
 Please make sure you configure a [Salesforce connection in Auth0](https://auth0.com/docs/connections/social/salesforce)
 
+Salesforce servers use TLS 1.2 but do not yet support forward secrecy. That's why apps need to disable the forward secrecy requirement. For more details please review [this link](https://rwhitleysfdc.wordpress.com/2015/09/29/tips-for-upgrading-mobile-sdk-apps-for-ios-9/)
+
+```
+<key>NSAppTransportSecurity</key>
+<dict>
+	<key>NSExceptionDomains</key>
+	<dict>
+		<key>salesforce.com</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSExceptionRequiresForwardSecrecy</key>
+			<false/>
+		</dict>
+		<key>force.com</key>
+		<dict>
+			<key>NSIncludesSubdomains</key>
+			<true/>
+			<key>NSExceptionRequiresForwardSecrecy</key>
+			<false/>
+		</dict>
+	</dict>
+</dict>
+```
 ## Important Snippets
 
 ### Step 1: Register the authenticator 
